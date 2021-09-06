@@ -6,7 +6,7 @@ import store from './store';
 import http from './api';
 import "@assets/css/common.scss";
 import * as custom from '@utils/filters'
-import * as from from 'jquery'
+import $ from 'jquery'
 import tool from '@utils/index.js'
 
 // 发布中央事件总线
@@ -23,8 +23,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import "zico/css/zico.min.css"
-
-
 
 import { Table, TableColumn, Form, FormItem } from 'element-ui';
 import * as echarts from 'echarts'

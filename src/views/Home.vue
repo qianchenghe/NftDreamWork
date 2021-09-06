@@ -12,8 +12,7 @@
   </div>
 </template>
 <script>
-// @ is an alias to /src
-// import cordovaPlugin from "../utils/cordovaplugin";
+
 export default {
   name: "Home",
 

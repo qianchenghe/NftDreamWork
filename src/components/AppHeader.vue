@@ -1,6 +1,6 @@
 <template>
   <div class="NavBar">
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
           <span class="sr-only">展开导航</span>
@@ -13,16 +13,16 @@
       <div class="collapse navbar-collapse" id="menu">
         <ul class="nav navbar-nav">
           <li class="active">
-            <a href="#">首页</a>
+            <a @click="goPage('home')" href="#">首页</a>
           </li>
           <li>
-            <a href="#">导航标题1</a>
+            <a @click="goPage('List')" href="#">NFT列表</a>
           </li>
           <li>
-            <a href="#">导航标题2</a>
+            <a @click="goPage('Make')" href="#">NFT制作</a>
           </li>
           <li>
-            <a href="#">导航标题2</a>
+            <a @click="goPage('About')" href="#">导航标题2</a>
           </li>
         </ul>
       </div>
@@ -38,7 +38,7 @@ export default {
       type: String,
       default: ""
     },
-    showRight: {
+    showRight: { 
       type: Boolean,
       default: false
     },
@@ -52,6 +52,12 @@ export default {
     }
   },
   methods: {
+    goPage(i){
+      console.log("跳转")
+      this.$router.push({
+        name:i
+      })
+    },
     back() {
       if (this.$route.name == "Home" || this.$route.path == "/") {
         this.$router.go(-1);
