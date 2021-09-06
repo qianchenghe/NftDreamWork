@@ -3,9 +3,11 @@
     <div>
       <app-header></app-header>
     </div>
-    <vue-page-stack>
-      <router-view></router-view>
-    </vue-page-stack>
+    <div style="margin-top:60px">
+      <vue-page-stack>
+        <router-view></router-view>
+      </vue-page-stack>
+    </div>
   </div>
 </template>
 <script>
