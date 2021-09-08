@@ -20,6 +20,8 @@
       </van-popup>
 
       <el-button is-link @click="showPopup" icon="el-icon-edit-outline" type="primary">制作NFT</el-button>
+      <el-button is-link @click="connectWallet" icon="el-icon-edit-outline" type="primary">连接钱包</el-button>
+
       <!-- <van-cell >展示弹出层</van-cell> -->
     </div>
     <el-button
@@ -34,6 +36,7 @@
 </template>
 <script>
 import QRCode from "qrcodejs2";
+
 export default {
   name: "Home",
 
@@ -53,15 +56,38 @@ export default {
      this.drawAndShareImage(this.bgImageUrl,)
   },
   computed: {
-   
+
   },
   watch: {
     userId: {
-      
+
     }
-   
+
   },
   methods: {
+    connectWallet(){
+      //判断用户是否安装MetaMask钱包插件
+      if (typeof window.ethereum === "undefined") {
+      	//没安装MetaMask钱包进行弹框提示
+      	alert("Looks like you need a Dapp browser to get started.");
+      	alert("Consider installing MetaMask!");
+      } else {
+      	//如果用户安装了MetaMask，你可以要求他们授权应用登录并获取其账号
+      	ethereum.enable()
+      		.catch(function(reason) {
+      			//如果用户拒绝了登录请求
+      			if (reason === "User rejected provider access") {
+      				// 用户拒绝登录后执行语句；
+      			} else {
+      				// 本不该执行到这里，但是真到这里了，说明发生了意外
+      				alert("There was an issue signing you in.");
+      			}
+      		}).then(function(accounts) {
+      			console.log('地址列表', accounts)
+            localStorage.setItem('account', JSON.stringify(accounts[0]));
+      		});
+      }
+    },
     showPopup(){
       this.isShowModal = true;
       setTimeout(() => {
@@ -78,7 +104,7 @@ export default {
       setTimeout(() => {
           this.saveImageInfo()
       })
-    
+
     },
      handleClose(done) {
         this.$confirm('确认关闭？')

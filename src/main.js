@@ -8,6 +8,7 @@ import "@assets/css/common.scss";
 import * as custom from '@utils/filters'
 import $ from 'jquery'
 import tool from '@utils/index.js'
+import web3js from '@assets/js/web3.min.js'
 
 // 发布中央事件总线
 import Bus from './utils/bus.js';
@@ -40,6 +41,7 @@ Vue.component(AppHeader.name, AppHeader);
 Vue.prototype.http = http;
 Vue.prototype.$bus = Bus;
 Vue.prototype.tool = tool;
+Vue.prototype.web3js = web3js;
 Vue.prototype.$alert = MessageBox
 Vue.config.productionTip = false;
 Object.keys(custom).forEach(key => {
