@@ -15,6 +15,7 @@
     "echarts": "^5.0.2",
     "element-ui": "^2.15.0",
     "popper.js": "^1.16.1",
+    "qrcodejs2": "0.0.2",
     "qs": "^6.9.4",
     "vant": "^2.12.6",
     "vconsole": "^3.3.4",

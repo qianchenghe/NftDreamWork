@@ -24,7 +24,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import "zico/css/zico.min.css"
 
-import { Table, TableColumn, Form, FormItem } from 'element-ui';
+import { Table, TableColumn, Form, FormItem, Button, MessageBox, Dialog } from 'element-ui';
 import * as echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 Vue.use(Vant);
@@ -34,22 +34,26 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(FormItem)
 Vue.use(Form)
+Vue.use(Button)
+Vue.use(Dialog)
 Vue.component(AppHeader.name, AppHeader);
 Vue.prototype.http = http;
 Vue.prototype.$bus = Bus;
 Vue.prototype.tool = tool;
+Vue.prototype.$alert = MessageBox
 Vue.config.productionTip = false;
 Object.keys(custom).forEach(key => {
-    Vue.filter(key, custom[key])
-})
-// const vConsole = new Vconsole();
+        Vue.filter(key, custom[key])
+    })
+    // const vConsole = new Vconsole();
 
 router.beforeEach((to, from, next) => {
-    if(to.meta.title){
+    if (to.meta.title) {
         document.title = to.meta.title
     }
     next()
 })
+
 function newVue() {
     new Vue({
         router,
@@ -59,9 +63,9 @@ function newVue() {
 }
 if (process.env.NODE_ENV === 'development') {
     newVue()
-   
+
 } else {
-    document.addEventListener('deviceready', function () {
+    document.addEventListener('deviceready', function() {
         window.StatusBar.overlaysWebView(false)
         window.StatusBar.backgroundColorByName("red");
     })

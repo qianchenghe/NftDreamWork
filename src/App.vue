@@ -21,6 +21,5 @@ export default {};
   font-size: 14px;
   // position: absolute;
   position: relative;
-  height: 100vh;
 }
 </style>
