@@ -1,27 +1,57 @@
 <template>
   <div class="home">
-    <div>1111111</div>
-    <div>1111111</div>
-    <div>1111111</div>
-    <div>1111111</div>
-    <div>1111111</div>
-    <div>1111111</div>
-    <div>1111111</div>
-    <div>1111111</div>
-    <div>1111111</div>
+    <!-- {{name}}
+    {{image}}
+    <van-empty :image="image" description="暂时没有数据" />-->
+    <div id="canvasBox">
+      <div id="qrcode" style="display:none"></div>
+      <canvas id="myCanvas"></canvas>
+    </div>
+    <div class="mackText">预览模式</div>
+    <div class="mackBtn">
+      <van-popup
+        closeable
+        close-icon="close"
+        @click-close-icon="closeModal"
+        :style="{ height: popupH,width:'85%', }"
+        v-model="isShowModal"
+      >
+        <div id="dranwBox"></div>
+      </van-popup>
+
+      <el-button is-link @click="showPopup" icon="el-icon-edit-outline" type="primary">制作NFT</el-button>
+      <!-- <van-cell >展示弹出层</van-cell> -->
+    </div>
+    <el-button
+      v-if="isShowModal"
+      class="preservation"
+      type="primary"
+      @click="saveAsLocalImage"
+    >保存NFT</el-button>
+    <!-- <canvas id="cvs" class="myCanvas"></canvas> -->
+    <!-- {{image}} -->
   </div>
 </template>
 <script>
-
+import QRCode from "qrcodejs2";
 export default {
   name: "Home",
 
   data() {
     return {
-      
+      isShowModal: false,
+      imageList:"",
+      qrcodeAddress:"https://opensea.io/",
+      qrcode1:"",
+      bgImageUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
+      dialogVisible: false,
+      popupH:0
     };
   },
-
+  mounted() {
+    this.qrcode(this.qrcodeAddress)
+     this.drawAndShareImage(this.bgImageUrl,)
+  },
   computed: {
    
   },
@@ -30,98 +60,140 @@ export default {
       
     }
    
-  }
+  },
+  methods: {
+    showPopup(){
+      this.isShowModal = true;
+      setTimeout(() => {
+            this.saveImageInfo()
+      }, 10);
+    },
+    closeModal(){
+      console.log("22345678")
+      var ele = document.querySelector('[data-id="1"]');
+      ele.remove()
+    },
+    open(){
+      this.dialogVisible = true;
+      setTimeout(() => {
+          this.saveImageInfo()
+      })
+    
+    },
+     handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      },
+      // 二维码生成
+      qrcode(qrcodeAddress) {
+        this.qrcode1 = new QRCode("qrcode", {
+            render: "canvas", // 也可以替换为table
+            width: 60,
+            height: 60,
+            text: qrcodeAddress, // 二维码地址
+            colorDark: "#000",
+            colorLight: "#fff"
+        });
+      },
+      // 合成图片
+      drawAndShareImage(bgImageUrl,qrcodeUrl){
+          var qrcodeImg = document.getElementById("qrcode").lastChild;
+          var canvas = document.getElementById("myCanvas");
+          var canvasBox = document.getElementById("canvasBox");
+          var bgImg = new Image();
+          bgImg.src = bgImageUrl;
+          canvas.width = canvasBox.offsetWidth;
+         canvas.height = canvasBox.offsetWidth;
+         this.popupH = canvasBox.offsetWidth;
+          var ctx = canvas.getContext("2d");
+          bgImg.crossOrigin = "Anonymous";
+          setTimeout(()=>{
+              bgImg.onload = function(){
+                ctx.drawImage(bgImg,0,0,canvas.width,canvas.height);
+                ctx.drawImage(qrcodeImg,3,3,qrcodeImg.width,qrcodeImg.height);
+             }
+          },10)
+      },
+      // 保存成图片
+      saveImageInfo() {
+          var mycanvas = document.getElementById("myCanvas");
+          var imageSrc = mycanvas.toDataURL("image/jpg");
+            // var w=window.open('about:blank','image from canvas');
+          var imageBox = document.getElementById("dranwBox");
+          console.log(imageBox, "imageBox")
+          var image = document.createElement("img");
+　　　　   image.setAttribute("src", imageSrc);
+          image.setAttribute("data-id", "1");
+            // w.document.write("<img src='"+image+"' alt='from canvas'/>");
+          imageBox.append(image);
+      },
+      // 下载图片
+     saveAsLocalImage(){
+        var myCanvas = document.getElementById("myCanvas");
+        var image = myCanvas.toDataURL("image/jpg").replace("image/jpg", "image/octet-stream");
+        window.location.href = image;
+    }
+    // PictureSynthesis(imageUrl, qrcodeUrl,){
+    //   // alert("111")
+    //   var canvas = document.getElementById("mycanvas")
+    //   var canvasBox = document.getElementById("canvasBox");
+    //    console.log(canvasBox, "canvasBoxWidth.style.width")
+    //     canvas.width = canvasBox.offsetWidth;
+    //     canvas.height = canvasBox.offsetWidth;
+    //     var context = canvas.getContext("2d");
+    //     context.rect(0, 0, canvas.width, canvas.height);
+    //     context.fillStyle = "#fff";
+    //     context.fill();
+    //     var myImage = new Image();
+    //     myImage.src = imageUrl // 背景图片 你自己本地的图片或者在线图片
+    //     myImage.crossOrigin = 'Anonymous';
+    //     myImage.onload = function(){
+    //       context.drawImage(myImage, 0, 0, canvas.width, canvas.height);
+    //       var myImage2 = new Image();
+    //       console.log(qrcodeUrl, "qrcodeUrl")
+    //       myImage2.src = require(qrcodeUrl); // 你自己本地的图片或者在线图片
+    //       myImage2.crossOrigin = 'Anonymous';
+    //       myImage2.onload = function(){
+    //         context.drawImage(myImage2, 0, 0, 80, 80);
+    //       }
+    //     }
+    // }
+  },
 };
 </script>
 <style lang="scss" scoped>
-.popoverDiv {
-  position: fixed;
-  top: 50px;
-  right: 0px;
-  text-align: right;
-  margin-right: 8px;
-}
-.banner {
-  padding-bottom: 10px;
-  background-color: #ededed;
-}
-.title {
-  width: 80%;
-  position: relative;
-  font-size: 16px;
+#canvasBox,
+.mackBtn {
+  width: 86%;
+  height: 100%;
   margin: 0 auto;
-  padding: 10px 16px 10px 24px;
-  border-bottom: 1px solid #f1f1f1;
-  font-weight: 500;
-  text-align: left;
+  padding-top: 20px;
+  // border: 1px solid #ddd;
 }
-
-.title::before {
-  content: "";
-  position: absolute;
-  left: 5px;
-  top: 15px;
-  display: block;
-  width: 4px;
-  height: 12px;
-  background: #b51313;
-  border-radius: 10px;
-}
-.navList {
-  display: flex;
-  justify-content: flex-start;
-  align-items: top;
-  flex-wrap: wrap;
-  font-size: 12px;
-  font-weight: 500;
+.mackBtn {
+  border: none;
   text-align: center;
-  padding-bottom: 15px;
+  margin-top: 40px;
+}
+.mackText {
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
   color: #5e5e5e;
-  border-bottom: 10px solid #f5f5f5;
 }
-.navIn {
-  width: 33.33333%;
-  padding: 16px 0 0;
-}
-.navIcon {
-  display: block;
-  margin: 0 auto 6px;
-  width: 2rem;
-}
-.changeUser {
-  position: relative;
-  /* padding: 15px; */
-  text-align: center;
-  color: #b1b1b1;
-  padding-bottom: 8px;
-}
-.changeUser span {
-  display: inline-block;
-  padding: 15px 10px;
-  background: #fff;
-}
-.changeUser::before {
-  content: "";
+.preservation {
   position: absolute;
-  z-index: -1;
-  left: 40px;
-  right: 40px;
-  top: 25px;
-  height: 1px;
-  background: #e6e3e3;
+  bottom: -8rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  z-index: 10000;
 }
-// .manageBox {
-//   margin: 0 40px;
-//   border: 1px #e6e3e3 dashed;
-//   text-align: center;
-// }
-// .manageBox > div {
-//   font-size: 40px;
-//   color: #e6e3e3;
-// }
-// .manageBox > span {
-//   font-size: 14px;
-//   line-height: 30px;
-//   color: #5e5e5e;
+// #dranwBox {
+//   width: 90%;
+//   margin: 10px auto;
+//   height: 100%;
 // }
 </style>
