@@ -22,12 +22,7 @@
       <el-button is-link @click="showPopup" icon="el-icon-edit-outline" type="primary">制作NFT</el-button>
       <!-- <van-cell >展示弹出层</van-cell> -->
     </div>
-    <el-button
-      v-if="isShowModal"
-      class="preservation"
-      type="primary"
-      @click="saveAsLocalImage"
-    >保存NFT</el-button>
+    <el-button v-if="isShowModal" class="preservation" type="primary" @click="savePic">保存NFT</el-button>
     <!-- <canvas id="cvs" class="myCanvas"></canvas> -->
     <!-- {{image}} -->
   </div>
@@ -135,6 +130,24 @@ export default {
         var myCanvas = document.getElementById("myCanvas");
         var image = myCanvas.toDataURL("image/jpg").replace("image/jpg", "image/octet-stream");
         window.location.href = image;
+    },
+    savePic(){
+      console.log("保存到相册")
+      var imgs = document.querySelector('[data-id="1"]');
+      var url = imgs.getAttribute("src");
+      this.saveImages(url);
+    },
+     saveImages(Url){
+        console.log("1111")
+          var blob = new Blob([''], { type:'application/octet-stream' });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = Url;
+          a.download = Url.replace(/(.*\/)*([^.]+.*)/ig, "$2").split("?")[0];
+          var e = document.createEvent('MouseEvents');
+          e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+          a.dispatchEvent(e);
+          URL.revokeObjectURL(url);
     }
     // PictureSynthesis(imageUrl, qrcodeUrl,){
     //   // alert("111")
