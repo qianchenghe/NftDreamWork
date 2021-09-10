@@ -9,7 +9,7 @@ module.exports = {
     lintOnSave: true, // eslint-loader 是否在保存的时候检查
     productionSourceMap: !IS_PROD, // 生产环境的source map
     configureWebpack: {
-        //支持jquery
+        // 支持jquery
         plugins: [
             new webpack.ProvidePlugin({
                 $:"jquery",
@@ -46,10 +46,8 @@ module.exports = {
     },
     devServer: {
         proxy: {
-            '/app_interface': {
-               
-                 target: `http://10.233.34.23:1820`, // 测试地址
-
+            '/api': {
+                target: `http://www.liulongbin.top:3005`, // 测试地址
                 changeOrigin: true,
                 // pathRewrite: {
                 //     '^/api': ''

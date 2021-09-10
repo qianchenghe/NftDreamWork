@@ -13,7 +13,7 @@ const routes = [
     }
   }, 
   { // NFT列表页
-    path: '/',
+    path: '/List',
     name: 'List',
     component: () => import(/* webpackChunkName: "about" */ '../views/List.vue'),
     meta:{
@@ -21,7 +21,7 @@ const routes = [
     }
   }, 
   { // NFT制作页
-    path: '/',
+    path: '/Make',
     name: 'Make',
     component: () => import(/* webpackChunkName: "about" */ '../views/Make.vue'),
     meta:{
@@ -29,7 +29,7 @@ const routes = [
     }
   }, 
   { // 关于
-    path: '/',
+    path: '/About',
     name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
     meta:{

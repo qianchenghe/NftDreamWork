@@ -3,7 +3,7 @@
     <div>
       <app-header></app-header>
     </div>
-    <div style="margin-top:60px">
+    <div style="margin-top:50px">
       <vue-page-stack>
         <router-view></router-view>
       </vue-page-stack>
