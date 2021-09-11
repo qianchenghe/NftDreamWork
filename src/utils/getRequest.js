@@ -1,22 +1,23 @@
 import server from "./server"
+
 function MyServer() {
     this.server = server
-    // 初始化，存储当前组件的变量
+        // 初始化，存储当前组件的变量
     this.nowhandle = null
 }
 /**
  * @param {object} obj 组件实例
  */
-MyServer.prototype.setThis = function (obj) {
-    this.nowhandle = obj
-    // 返回this，方便后面的链式操作
-    return this
-}
-/**
- * @param {string} moduleName // 自定义的apI模块名称
- * @param {Object} urlObj // 存放api路径的对象
- */
-MyServer.prototype.parseRouter = function (moduleName, urlObj) {
+MyServer.prototype.setThis = function(obj) {
+        this.nowhandle = obj
+            // 返回this，方便后面的链式操作
+        return this
+    }
+    /**
+     * @param {string} moduleName // 自定义的apI模块名称
+     * @param {Object} urlObj // 存放api路径的对象
+     */
+MyServer.prototype.parseRouter = function(moduleName, urlObj) {
     this[moduleName] = {}
     Object.keys(urlObj).forEach(urlName => {
         // bind 指向 myserver
@@ -31,16 +32,23 @@ MyServer.prototype.parseRouter = function (moduleName, urlObj) {
  * @param {string} url 当前请求的的地址
  * @param {object} config 接口传入的自定义参数
  */
-MyServer.prototype.sendMessage = function (moduleName, urlName, url, config) {
-    // 默认化处理
+MyServer.prototype.sendMessage = function(moduleName, urlName, url, config) {
     config = config || {}
+    const headers = config.headers || {}
+
+    // const token = localStorage.getItem("token");
+    // if (!token && typeof(token) != "undefined") {} else {
+    //     headers['Authorization'] = token
+    // }
+
+    // 默认化处理
     const addParam = config.addParam || ''
     const type = config.type || 'get'
     const params = config.params || {}
-    const headers = config.headers || {}
     const bindName = config.bindName || ''
     const repeat = config.repeat || false
     const self = this
+
     function defaultFn(res) {
         if (bindName !== '') {
             self.nowhandle[bindName] = res || {}
@@ -52,6 +60,7 @@ MyServer.prototype.sendMessage = function (moduleName, urlName, url, config) {
         self[moduleName][urlName].state = 'ready'
         return success(res, defaultFn)
     }
+
     function defaultFailFn(error) {
         console.log(error)
     }
@@ -62,17 +71,16 @@ MyServer.prototype.sendMessage = function (moduleName, urlName, url, config) {
         return fail(error, defaultFailFn)
     }
     var state = {
-        get: function () {
+        get: function() {
             self.server.get(url + addParam, { params, headers }).then(callback).catch(failCallback)
         },
-        post: function () {
+        post: function() {
             self.server.post(url + addParam, params, { headers }).then(callback).catch(failCallback)
         },
-        put: function () {
+        put: function() {
             self.server.put(url + addParam, params, { headers }).then(callback).catch(failCallback)
         },
-        delete: function () {
-        }
+        delete: function() {}
     }
     if (repeat) {
         state[type]()

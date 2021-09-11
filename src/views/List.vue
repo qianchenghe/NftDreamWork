@@ -77,6 +77,7 @@ export default {
   computed: {
 
   },
+
   watch: {
     userId: {
 
@@ -84,6 +85,7 @@ export default {
 
   },
   mounted() {
+<<<<<<< Updated upstream
     // this.getData()
     var account = JSON.parse(localStorage.getItem('account'));
     this.query.owner = account;
@@ -96,9 +98,30 @@ export default {
          type: "get",
          success: res => {
            console.log(res)
+=======
+    this.getAthleteList()
+  },
+  methods: {
+      getAthleteList(){
+          const getData = { 
+            orderDirection:"desc",
+            offset:0,
+            limit:20,
+            owner:"0xB72b0a3e30BCF013310214f2B839162f7f066397"
+          }
+          const _this = this;
+          _this.http.test.getTestData({
+            type: "get",
+            params:getData,
+            success(res) {
+              console.log(res)
+            },
+            fail(err) {
+              console.log(err)
+            }
+          })
+>>>>>>> Stashed changes
         }
-      })
-    }
   },
 };
 </script>

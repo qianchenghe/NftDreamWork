@@ -31,8 +31,16 @@
     mounted() {
 
     },
+<<<<<<< Updated upstream
     computed: {
 
+=======
+    open(){
+      this.dialogVisible = true;
+      setTimeout(() => {
+          this.saveImageInfo()
+      })
+>>>>>>> Stashed changes
     },
     watch: {
       userId: {

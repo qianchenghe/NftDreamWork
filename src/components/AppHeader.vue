@@ -89,6 +89,7 @@ export default {
       this.$router.push({
         name:item
       })
+      
     },
     back() {
       if (this.$route.name == "Home" || this.$route.path == "/") {

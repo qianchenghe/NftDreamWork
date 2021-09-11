@@ -1,0 +1,63 @@
+// eslint-disable-next-line no-unused-vars
+import Vue from "vue";
+const utils = {};
+utils.install = (Vue, options) => {
+  Vue.mixin({
+    methods: {
+      islogin() {
+        // 此函数可在任何页面引用， 引用方式 this.islogin();
+        // 检查是否登陆
+      },
+      isPhoneNumber(num) {
+        // 检查是否是手机号
+        return /^1[2,3,4,5,7,8]\d{9}$/.test(num);
+      },
+      isName(name) {
+        // 检测中英文姓名
+        return /[a-zA-Z\u4E00-\u9FA5]+$/.test(name);
+      },
+      trim(str) {
+        // 去掉文字得空格
+        return str.replace(/(^\s*)|(\s*$)/g, "");
+      },
+      // 格式化时间为 yyyy-MM-dd
+      formatDate(time) {
+        if (time != null && time != "") {
+          const dates = new Date(time);
+          const year = dates.getFullYear();
+          let MM = dates.getMonth() + 1;
+          MM = MM < 10 ? "0" + MM : MM;
+          let d = dates.getDate();
+          d = d < 10 ? "0" + d : d;
+          return year + "-" + MM + "-" + d;
+        } else {
+          return "--";
+        }
+      }
+    }
+  });
+  
+  // 这块可以写指令
+  Vue.directive("xxx", function(el, binding) {});
+  Vue.directive("focus", {
+    inserted: el => {
+      el.focus();
+    }
+  });
+};
+// // 格式化时间为 yyyy-MM-dd
+// Vue.filter("formatDate", function(time) {
+//   if (time != null && time != "") {
+//     let date = new Date(time);
+//     let y = date.getFullYear();
+//     let MM = date.getMonth() + 1;
+//     MM = MM < 10 ? "0" + MM : MM;
+//     let d = date.getDate();
+//     d = d < 10 ? "0" + d : d;
+//     return y + "-" + MM + "-" + d;
+//   } else {
+//     return "--";
+//   }
+// });
+
+export default utils;

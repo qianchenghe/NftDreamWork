@@ -13,16 +13,4 @@ const RemoveZeros = value => { // 去掉前导零 0001 转换成 1
     return value.replace(/\b(0+)/gi, "")
   }
 }
-const ToLocale = value => { // 
-  if (value && myIsNaN(value)) {
-    value = value.toFixed(2);
-    value = parseFloat(value)
-    return value.toLocaleString()
-  } else {
-    return value
-  }
-}
-function myIsNaN(value) {
-  return typeof value === 'number' && !isNaN(value);
-}
-export { DateFormat, TimeFormat, RemoveZeros, ToLocale }
+export { DateFormat, TimeFormat, RemoveZeros }
