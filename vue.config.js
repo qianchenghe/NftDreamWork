@@ -12,9 +12,9 @@ module.exports = {
         // 支持jquery
         plugins: [
             new webpack.ProvidePlugin({
-                $:"jquery",
-                jQuery:"jquery",
-                "windows.jQuery":"jquery"
+                $: "jquery",
+                jQuery: "jquery",
+                "windows.jQuery": "jquery"
             })
         ]
     },
@@ -44,6 +44,7 @@ module.exports = {
             }
         }
     },
+    // http://www.liulongbin.top:3005/api/getlunbo
     devServer: {
         proxy: {
             '/api': {

@@ -8,19 +8,19 @@
           </div>
           <div class="describeInfo">
             <div class="describe_title">
-              <div style="margin:3px 0">
+              <div style="margin:3px 3px">
                 <b>{{item.title}}</b>
               </div>
-              <div>{{item.name}}</div>
+              <div style="margin:3px 3px"> {{item.name}}</div>
             </div>
             <div class="describe_price">
-              <div style="margin:3px 0">Price</div>
+              <div style="margin:3px 3px">Price</div>
               <div>
                 <img
                   class="Blockreact__Block-sc-1xf18x6-0 Avatarreact__ImgAvatar-sc-sbw25j-1 dZKMVc hzWBaN"
                   src="https://storage.opensea.io/files/265128aa51521c90f7905e5a43dcb456.svg"
                 />
-                <span>{{item.price}}</span>
+                <span style="margin:3px 3px">{{item.price}}</span>
               </div>
             </div>
           </div>
@@ -105,6 +105,7 @@ export default {
     border: 1px solid #ddd;
     padding: 5px;
     margin-bottom: 10px;
+    border-radius: 3px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
   .describeInfo {

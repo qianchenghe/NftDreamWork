@@ -11,11 +11,11 @@
         <a class="navbar-brand" href="#">网站标题</a>
       </div>
       <div class="collapse navbar-collapse" id="menu">
-        <ul class="nav navbar-nav">
-          <li class="active">
-            <a @click="goPage('home')" href="#">首页</a>
+        <ul class="nav navbar-nav  nav-fill"  >
+          <li v-for="(item,index) in navlist" :key="item.id" :class=" navIndex === index ? 'active' : ''">
+            <a @click="goPage(index,item.navUrl)" data-toggle="tab" href="#">{{item.navName}}</a>
           </li>
-          <li>
+          <!-- <li>
             <a @click="goPage('List')" href="#">NFT列表</a>
           </li>
           <li>
@@ -23,7 +23,7 @@
           </li>
           <li>
             <a @click="goPage('About')" href="#">导航标题2</a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>
@@ -33,6 +33,30 @@
 <script>
 export default {
   name: "AppHeader",
+  data(){
+    return{
+      navlist:[
+        {
+          navUrl:"Home",
+          navName:"首页"
+        
+        },
+        {
+          navUrl:"List",
+          navName:"NFT列表"
+        },
+        {
+          navUrl:"Make",
+          navName:"NFT制作"
+        },
+        {
+          navUrl:"About",
+          navName:"关于"
+        },
+      ],
+      navIndex:0
+    }
+  },
   props: {
     title: {
       type: String,
@@ -52,10 +76,15 @@ export default {
     }
   },
   methods: {
-    goPage(i){
+    goPage(i,item){
       console.log("跳转")
+      this.navIndex = i;
+      var a = document.querySelector(".navbar-toggle");
+      $(".navbar-nav li a").on("click",function () {
+          a.click();
+      });
       this.$router.push({
-        name:i
+        name:item
       })
     },
     back() {
