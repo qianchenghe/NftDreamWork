@@ -29,6 +29,7 @@
     </div>
   </div>
 </template>
+
 <script>
 // @ is an alias to /src
 // import cordovaPlugin from "../utils/cordovaplugin";
@@ -37,27 +38,33 @@ export default {
 
   data() {
     return {
+      query: {
+        orderDirection:"desc",
+        offset:0,
+        limit:20,
+        owner:""
+      },
        bgImageUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
        list:[
-         { 
+         {
            imgUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
            title:"CryptoPunk",
            name:"CryptoPunk #29343",
            price:"105"
          },
-          { 
+          {
            imgUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
            title:"CryptoPunk",
            name:"CryptoPunk #29343",
            price:"105"
          },
-          { 
+          {
            imgUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
            title:"CryptoPunk",
            name:"CryptoPunk #29343",
            price:"105"
          },
-          { 
+          {
            imgUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
            title:"CryptoPunk",
            name:"CryptoPunk #29343",
@@ -68,21 +75,24 @@ export default {
   },
 
   computed: {
-   
+
   },
   watch: {
     userId: {
-      
+
     }
-   
+
   },
   mounted() {
     // this.getData()
+    var account = JSON.parse(localStorage.getItem('account'));
+    this.query.owner = account;
+    this.getData();
   },
   methods: {
     getData(){
-      const _this = this;
-      _this.http.test.getWeekly({
+       
+       _this.http.test.getWeekly({
          type: "get",
          success: res => {
            console.log(res)

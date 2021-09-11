@@ -22,8 +22,11 @@
             <a @click="goPage('Make')" href="#">NFT制作</a>
           </li>
           <li>
+
             <a @click="goPage('About')" href="#">导航标题2</a>
           </li> -->
+
+          </li>
         </ul>
       </div>
     </nav>

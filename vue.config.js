@@ -48,7 +48,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                target: `http://www.liulongbin.top:3005`, // 测试地址
+                target: `http://182.92.210.227:8080`, // 测试地址
                 changeOrigin: true,
                 // pathRewrite: {
                 //     '^/api': ''

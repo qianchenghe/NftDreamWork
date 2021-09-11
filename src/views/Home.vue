@@ -1,212 +1,104 @@
 <template>
   <div class="home">
-    <!-- {{name}}
-    {{image}}
-    <van-empty :image="image" description="暂时没有数据" />-->
-    <div id="canvasBox">
-      <div id="qrcode" style="display:none"></div>
-      <canvas id="myCanvas"></canvas>
+    <div class="introduction">NFT Dream work 最好用的nft二次加工平台</div>
+    <div class="content">
+        <br>应用场景:</br>
+        社交网站，微博，微信朋友圈发带二维码的NFT。朋友通过扫描二维码，了解更多NFT的信息，以及所有者的信息。
+        <br></br>
+        总体描述:<br>
+        NFT图片加二维码，手机通过扫描二维码跳转到二维码网站上的个人网页显示NFT信息，个性化信息。
     </div>
-    <div class="mackText">预览模式</div>
-    <div class="mackBtn">
-      <van-popup
-        closeable
-        close-icon="close"
-        @click-close-icon="closeModal"
-        :style="{ height: popupH,width:'85%', }"
-        v-model="isShowModal"
-      >
-        <div id="dranwBox"></div>
-      </van-popup>
-
-      <el-button is-link @click="showPopup" icon="el-icon-edit-outline" type="primary">制作NFT</el-button>
-      <!-- <van-cell >展示弹出层</van-cell> -->
+    <div class="img">
+     <img :src="imgUrl">
+     </div>
+    <div class="btn">
+        <el-button is-link @click="connectWallet" icon="el-icon-edit-outline" type="primary">连接钱包</el-button>
     </div>
-    <el-button v-if="isShowModal" class="preservation" type="primary" @click="savePic">保存NFT</el-button>
-    <!-- <canvas id="cvs" class="myCanvas"></canvas> -->
-    <!-- {{image}} -->
   </div>
 </template>
 <script>
-import QRCode from "qrcodejs2";
-export default {
-  name: "Home",
+  import {
+  	web3j
+  } from '../assets/js/web3.min.js';
 
-  data() {
-    return {
-      isShowModal: false,
-      imageList:"",
-      qrcodeAddress:"https://opensea.io/",
-      qrcode1:"",
-      bgImageUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
-      dialogVisible: false,
-      popupH:0
-    };
-  },
-  mounted() {
-    this.qrcode(this.qrcodeAddress)
-     this.drawAndShareImage(this.bgImageUrl,)
-  },
-  computed: {
-   
-  },
-  watch: {
-    userId: {
-      
-    }
-   
-  },
-  methods: {
-    showPopup(){
-      this.isShowModal = true;
-      setTimeout(() => {
-            this.saveImageInfo()
-      }, 10);
+  export default {
+    name: "Home",
+    data() {
+      return {
+        imgUrl: require("../assets/img/back.jpg")
+        };
     },
-    closeModal(){
-      console.log("22345678")
-      var ele = document.querySelector('[data-id="1"]');
-      ele.remove()
+    mounted() {
+
     },
-    open(){
-      this.dialogVisible = true;
-      setTimeout(() => {
-          this.saveImageInfo()
-      })
-    
+    computed: {
+
     },
-     handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
+    watch: {
+      userId: {
+
+      }
+
+    },
+    methods: {
+      connectWallet() {
+        console.log("connet wallet");
+        //判断用户是否安装MetaMask钱包插件
+        if (typeof window.ethereum === "undefined") {
+          //没安装MetaMask钱包进行弹框提示
+          alert("Looks like you need a Dapp browser to get started.");
+          alert("Consider installing MetaMask!");
+        } else {
+          //如果用户安装了MetaMask，你可以要求他们授权应用登录并获取其账号
+          ethereum.enable()
+            .catch(function(reason) {
+              //如果用户拒绝了登录请求
+              if (reason === "User rejected provider access") {
+                // 用户拒绝登录后执行语句；
+              } else {
+                // 本不该执行到这里，但是真到这里了，说明发生了意外
+                alert("There was an issue signing you in.");
+              }
+            }).then(function(accounts) {
+              console.log('地址列表', accounts)
+              localStorage.setItem('account', JSON.stringify(accounts[0]));
+            });
+        }
       },
-      // 二维码生成
-      qrcode(qrcodeAddress) {
-        this.qrcode1 = new QRCode("qrcode", {
-            render: "canvas", // 也可以替换为table
-            width: 60,
-            height: 60,
-            text: qrcodeAddress, // 二维码地址
-            colorDark: "#000",
-            colorLight: "#fff"
-        });
-      },
-      // 合成图片
-      drawAndShareImage(bgImageUrl,qrcodeUrl){
-          var qrcodeImg = document.getElementById("qrcode").lastChild;
-          var canvas = document.getElementById("myCanvas");
-          var canvasBox = document.getElementById("canvasBox");
-          var bgImg = new Image();
-          bgImg.src = bgImageUrl;
-          canvas.width = canvasBox.offsetWidth;
-         canvas.height = canvasBox.offsetWidth;
-         this.popupH = canvasBox.offsetWidth;
-          var ctx = canvas.getContext("2d");
-          bgImg.crossOrigin = "Anonymous";
-          setTimeout(()=>{
-              bgImg.onload = function(){
-                ctx.drawImage(bgImg,0,0,canvas.width,canvas.height);
-                ctx.drawImage(qrcodeImg,3,3,qrcodeImg.width,qrcodeImg.height);
-             }
-          },10)
-      },
-      // 保存成图片
-      saveImageInfo() {
-          var mycanvas = document.getElementById("myCanvas");
-          var imageSrc = mycanvas.toDataURL("image/jpg");
-            // var w=window.open('about:blank','image from canvas');
-          var imageBox = document.getElementById("dranwBox");
-          console.log(imageBox, "imageBox")
-          var image = document.createElement("img");
-　　　　   image.setAttribute("src", imageSrc);
-          image.setAttribute("data-id", "1");
-            // w.document.write("<img src='"+image+"' alt='from canvas'/>");
-          imageBox.append(image);
-      },
-      // 下载图片
-     saveAsLocalImage(){
-        var myCanvas = document.getElementById("myCanvas");
-        var image = myCanvas.toDataURL("image/jpg").replace("image/jpg", "image/octet-stream");
-        window.location.href = image;
+
     },
-    savePic(){
-      console.log("保存到相册")
-      var imgs = document.querySelector('[data-id="1"]');
-      var url = imgs.getAttribute("src");
-      this.saveImages(url);
-    },
-     saveImages(Url){
-        console.log("1111")
-          var blob = new Blob([''], { type:'application/octet-stream' });
-          var url = URL.createObjectURL(blob);
-          var a = document.createElement('a');
-          a.href = Url;
-          a.download = Url.replace(/(.*\/)*([^.]+.*)/ig, "$2").split("?")[0];
-          var e = document.createEvent('MouseEvents');
-          e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-          a.dispatchEvent(e);
-          URL.revokeObjectURL(url);
-    }
-    // PictureSynthesis(imageUrl, qrcodeUrl,){
-    //   // alert("111")
-    //   var canvas = document.getElementById("mycanvas")
-    //   var canvasBox = document.getElementById("canvasBox");
-    //    console.log(canvasBox, "canvasBoxWidth.style.width")
-    //     canvas.width = canvasBox.offsetWidth;
-    //     canvas.height = canvasBox.offsetWidth;
-    //     var context = canvas.getContext("2d");
-    //     context.rect(0, 0, canvas.width, canvas.height);
-    //     context.fillStyle = "#fff";
-    //     context.fill();
-    //     var myImage = new Image();
-    //     myImage.src = imageUrl // 背景图片 你自己本地的图片或者在线图片
-    //     myImage.crossOrigin = 'Anonymous';
-    //     myImage.onload = function(){
-    //       context.drawImage(myImage, 0, 0, canvas.width, canvas.height);
-    //       var myImage2 = new Image();
-    //       console.log(qrcodeUrl, "qrcodeUrl")
-    //       myImage2.src = require(qrcodeUrl); // 你自己本地的图片或者在线图片
-    //       myImage2.crossOrigin = 'Anonymous';
-    //       myImage2.onload = function(){
-    //         context.drawImage(myImage2, 0, 0, 80, 80);
-    //       }
-    //     }
-    // }
-  },
-};
+  };
 </script>
 <style lang="scss" scoped>
-#canvasBox,
-.mackBtn {
-  width: 86%;
-  height: 100%;
-  margin: 0 auto;
-  padding-top: 20px;
-  // border: 1px solid #ddd;
-}
-.mackBtn {
-  border: none;
-  text-align: center;
-  margin-top: 40px;
-}
-.mackText {
-  margin-top: 10px;
-  font-size: 16px;
-  text-align: center;
-  color: #5e5e5e;
-}
-.preservation {
-  position: absolute;
-  bottom: -8rem;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  z-index: 10000;
-}
-// #dranwBox {
-//   width: 90%;
-//   margin: 10px auto;
-//   height: 100%;
-// }
+  #canvasBox,
+
+  .btn {
+    width: 100%;
+    border: none;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .introduction {
+    margin-top: 20%;
+    font-size: 16px;
+    text-align: center;
+    color: #5e5e5e;
+    font-weight: bold;
+  }
+
+  .content {
+    width: 70%;
+    margin-left: 15%;
+    font-size: 16px;
+    color: #5e5e5e;
+  }
+
+  .img {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+  }
+
+
 </style>

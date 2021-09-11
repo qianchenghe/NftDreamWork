@@ -2269,10 +2269,10 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.npm.taobao.org/boolbase/download/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
-bootstrap@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.1.0.tgz#543ef8f44f4b9af67b0230f19508542fec38ef55"
-  integrity sha512-bs74WNI9BgBo3cEovmdMHikSKoXnDgA6VQjJ7TyTotU6L7d41ZyCEEelPwkYEzsG/Zjv3ie9IE3EMAje0W9Xew==
+bootstrap@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.nlark.com/bootstrap/download/bootstrap-3.4.1.tgz#c3a347d419e289ad11f4033e3c4132b87c081d72"
+  integrity sha1-w6NH1Bniia0R9AM+PEEyuHwIHXI=
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -7433,6 +7433,11 @@ q@^1.1.2:
   version "1.5.1"
   resolved "https://registry.npm.taobao.org/q/download/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
+
+qrcodejs2@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npm.taobao.org/qrcodejs2/download/qrcodejs2-0.0.2.tgz#465afe5e39f19facecb932c11f7a186109146ae1"
+  integrity sha1-Rlr+Xjnxn6zsuTLBH3oYYQkUauE=
 
 qs@6.7.0:
   version "6.7.0"
