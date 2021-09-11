@@ -47,11 +47,7 @@ module.exports = {
     // http://www.liulongbin.top:3005/api/getlunbo
     devServer: {
         proxy: {
-<<<<<<< Updated upstream
             '/api': {
-=======
-            "/api": {
->>>>>>> Stashed changes
                 target: `http://182.92.210.227:8080`, // 测试地址
                 changeOrigin: true,
                 logLevel: 'debug',
