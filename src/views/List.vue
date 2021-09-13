@@ -3,23 +3,18 @@
     <div class="col-lg-12 col-md-12 contentBox">
       <div class="feetype row">
         <div v-for="item in list" :key="item.id" class="col-md-4 col-xs-12 recommend_li">
-          <div class="imgUrl">
-            <img style="width:100%" :src="item.imgUrl" alt />
-          </div>
-          <div class="describeInfo">
-            <div class="describe_title">
-              <div style="margin:3px 3px">
-                <b>{{item.title}}</b>
+          <div class="card" @click="toMake(item)">
+            <div class="describeInfo">
+              <div class="describe_title">
+                <div style="margin:3px 3px">
+                  <b>{{item.title}}</b>
+                </div>
+                <div style="margin:3px 3px"> {{item.name}} </div>
               </div>
-              <div style="margin:3px 3px"> {{item.name}}</div>
             </div>
             <div class="describe_price">
-              <div style="margin:3px 3px">Price</div>
               <div>
-                <img
-                  class="Blockreact__Block-sc-1xf18x6-0 Avatarreact__ImgAvatar-sc-sbw25j-1 dZKMVc hzWBaN"
-                  src="https://storage.opensea.io/files/265128aa51521c90f7905e5a43dcb456.svg"
-                />
+                <img width="100%" :src="item.imageUrl" />
                 <span style="margin:3px 3px">{{item.price}}</span>
               </div>
             </div>
@@ -31,134 +26,117 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import cordovaPlugin from "../utils/cordovaplugin";
-export default {
-  name: "List",
+  // @ is an alias to /src
+  // import cordovaPlugin from "../utils/cordovaplugin";
+  export default {
+    name: "List",
 
-  data() {
-    return {
-      query: {
-        orderDirection:"desc",
-        offset:0,
-        limit:20,
-        owner:""
-      },
-       bgImageUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
-       list:[
-         {
-           imgUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
-           title:"CryptoPunk",
-           name:"CryptoPunk #29343",
-           price:"105"
-         },
-          {
-           imgUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
-           title:"CryptoPunk",
-           name:"CryptoPunk #29343",
-           price:"105"
-         },
-          {
-           imgUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
-           title:"CryptoPunk",
-           name:"CryptoPunk #29343",
-           price:"105"
-         },
-          {
-           imgUrl:"https://storage.opensea.io/static/promocards/fatales-promocard.png",
-           title:"CryptoPunk",
-           name:"CryptoPunk #29343",
-           price:"105"
-         },
-       ]
-    };
-  },
+    data() {
+      return {
+        query: {
+          orderDirection: "desc",
+          offset: 0,
+          limit: 20,
+          owner: ""
+        },
+        bgImageUrl: "https://storage.opensea.io/static/promocards/fatales-promocard.png",
+        list: [
 
-  computed: {
+        ]
+      };
+    },
 
-  },
+    computed: {
 
-  watch: {
-    userId: {
+    },
 
-    }
+    watch: {
+      userId: {
 
-  },
-  mounted() {
-<<<<<<< Updated upstream
-    // this.getData()
-    var account = JSON.parse(localStorage.getItem('account'));
-    this.query.owner = account;
-    this.getData();
-  },
-  methods: {
-    getData(){
-       
-       _this.http.test.getWeekly({
-         type: "get",
-         success: res => {
-           console.log(res)
-=======
-    this.getAthleteList()
-  },
-  methods: {
-      getAthleteList(){
-          const getData = { 
-            orderDirection:"desc",
-            offset:0,
-            limit:20,
-            owner:"0xB72b0a3e30BCF013310214f2B839162f7f066397"
-          }
-          const _this = this;
-          _this.http.test.getTestData({
-            type: "get",
-            params:getData,
-            success(res) {
-              console.log(res)
-            },
-            fail(err) {
-              console.log(err)
-            }
-          })
->>>>>>> Stashed changes
+      }
+
+    },
+    mounted() {
+      // this.getData()
+      var account = JSON.parse(localStorage.getItem('account'));
+      this.query.owner = account;
+      this.getAthleteList(account)
+    },
+    methods: {
+      getAthleteList(account) {
+        const getData = {
+          orderDirection: "desc",
+          offset: 0,
+          limit: 20,
+          owner: "0xB72b0a3e30BCF013310214f2B839162f7f066397"
         }
-  },
-};
+        const _this = this;
+        _this.http.test.getTestData({
+          type: "get",
+          params: getData,
+          success(res) {
+            if (res.code == 0) {
+              console.log(res);
+              _this.list = res.data;
+              console.log(_this.list);
+            }
+          },
+          fail(err) {
+            console.log(err)
+          }
+        })
+
+      },
+
+      toMake(item){
+        console.log(item.assetContract.address);
+        console.log(item.tokenId);
+        this.$router.push({path:'/Make',query:{"tokenId":item.tokenId,"contraceAddress":item.assetContract.address}});
+      }
+    },
+  };
 </script>
 <style lang="scss" scoped>
-@media screen and (min-width: 1280px) and (max-width: 1680px) {
+  @media screen and (min-width: 1280px) and (max-width: 1680px) {
+    .feetype {
+      margin: 0 auto;
+      width: 82%;
+    }
+  }
+
   .feetype {
-    margin: 0 auto;
-    width: 82%;
-  }
-}
-.feetype {
-  padding: 10px;
-  .recommend_li {
-    border: 1px solid #ddd;
-    padding: 5px;
-    margin-bottom: 10px;
-    border-radius: 3px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  }
-  .describeInfo {
-    font-size: 14px;
-    .dZKMVc {
-      width: 14px;
-      height: 14px;
+    padding: 10px;
+
+    .recommend_li {
+      border: 1px solid #ddd;
+      padding: 5px;
+      margin-bottom: 10px;
+      border-radius: 3px;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     }
-    display: flex;
-    .describe_title {
-      flex: 2 0 0%;
-      align-items: flex-start;
-      flex-direction: column;
-    }
-    .describe_price {
-      max-width: 50%;
-      align-items: flex-end;
-      flex-direction: column;
+
+    .describeInfo {
+      font-size: 14px;
+
+      .dZKMVc {
+        width: 14px;
+        height: 14px;
+      }
+
       display: flex;
+
+      .describe_title {
+        flex: 2 0 0%;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .describe_price {
+        max-width: 50%;
+        align-items: flex-end;
+        flex-direction: column;
+        display: flex;
+      }
     }
   }
-}
 </style>

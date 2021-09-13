@@ -33,14 +33,19 @@
         imageList: "",
         qrcodeAddress: "https://opensea.io/",
         qrcode1: "",
-        bgImageUrl: "https://storage.opensea.io/static/promocards/fatales-promocard.png",
+        bgImageUrl: "https://lh3.googleusercontent.com/_G6xsXGAL6ftk22W…u2zwPP-U27o0Zbk5Vgn0gKps06WZm43udlognHkWKXEtoLONw",
         dialogVisible: false,
-        popupH: 0
+        popupH: 0,
+        tokenId: "",
+        contraceAddress: ""
       };
     },
     mounted() {
-      this.qrcode(this.qrcodeAddress)
-      this.drawAndShareImage(this.bgImageUrl, )
+      console.log(this.$route.query);
+      this.contraceAddress = this.$route.query.contraceAddress;
+      this.tokenId = this.$route.query.tokenId;
+
+      this.getData();
     },
     computed: {
 
@@ -52,6 +57,33 @@
 
     },
     methods: {
+      getData() {
+        const _this = this;
+        const getData = {
+          assetContractAddress: _this.contraceAddress,
+          tokenId: _this.tokenId
+         }
+
+        _this.http.test.getDetailData({
+          type: "get",
+          params: getData,
+          success(res) {
+            if (res.code == 0) {
+              _this.qrcodeAddress = res.data.permalink;
+              _this.bgImageUrl = res.data.imageUrl;
+              console.log(res);
+              console.log(_this.qrcodeAddress);
+              console.log(_this.bgImageUrl);
+              _this.qrcode(res.data.permalink)
+              _this.drawAndShareImage(res.data.imageUrl, )
+            }
+          },
+          fail(err) {
+            console.log(err)
+          }
+        })
+
+      },
       showPopup() {
         this.isShowModal = true;
         setTimeout(() => {

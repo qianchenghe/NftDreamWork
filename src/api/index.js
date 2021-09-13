@@ -10,8 +10,4 @@ apiFiles.keys().map(modulePath => {
   myServer.parseRouter(moduleName, value.default);
 });
 
-<<<<<<< Updated upstream
-export default myServer
-=======
 export default myServer;
->>>>>>> Stashed changes

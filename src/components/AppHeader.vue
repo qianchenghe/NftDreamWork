@@ -2,13 +2,16 @@
   <div class="NavBar">
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="navbar-header">
+
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
           <span class="sr-only">展开导航</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">网站标题</a>
+        <img class="navbar-brand" :src="logo">
+        <a class="navbar-brand" href="#">NFT Dream Work</a>
+        
       </div>
       <div class="collapse navbar-collapse" id="menu">
         <ul class="nav navbar-nav  nav-fill"  >
@@ -42,7 +45,7 @@ export default {
         {
           navUrl:"Home",
           navName:"首页"
-        
+
         },
         {
           navUrl:"List",
@@ -56,8 +59,10 @@ export default {
           navUrl:"About",
           navName:"关于"
         },
+
       ],
-      navIndex:0
+      navIndex:0,
+      logo: require( "../assets/img/logo.jpg")
     }
   },
   props: {
@@ -65,7 +70,7 @@ export default {
       type: String,
       default: ""
     },
-    showRight: { 
+    showRight: {
       type: Boolean,
       default: false
     },
@@ -89,7 +94,7 @@ export default {
       this.$router.push({
         name:item
       })
-      
+
     },
     back() {
       if (this.$route.name == "Home" || this.$route.path == "/") {
@@ -113,6 +118,10 @@ export default {
   }
   .iconfont {
     color: #83888a;
+  }
+  .logo {
+    height: 30px;
+    weight: 30px
   }
 }
 </style>
