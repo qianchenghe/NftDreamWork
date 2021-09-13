@@ -68,7 +68,7 @@
           orderDirection: "desc",
           offset: 0,
           limit: 20,
-          owner: "0xB72b0a3e30BCF013310214f2B839162f7f066397"
+          owner: account
         }
         const _this = this;
         _this.http.test.getTestData({
