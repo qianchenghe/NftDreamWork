@@ -2,33 +2,23 @@
   <div class="NavBar">
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="navbar-header">
-
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
           <span class="sr-only">展开导航</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <img class="navbar-brand" :src="logo">
+        <img class="navbar-brand" :src="logo" />
         <a class="navbar-brand" href="#">NFT Dream Work</a>
-        
       </div>
       <div class="collapse navbar-collapse" id="menu">
-        <ul class="nav navbar-nav  nav-fill"  >
-          <li v-for="(item,index) in navlist" :key="item.id" :class=" navIndex === index ? 'active' : ''">
+        <ul class="nav navbar-nav nav-fill">
+          <li
+            v-for="(item,index) in navlist"
+            :key="item.id"
+            :class=" navIndex === index ? 'active' : ''"
+          >
             <a @click="goPage(index,item.navUrl)" data-toggle="tab" href="#">{{item.navName}}</a>
-          </li>
-          <!-- <li>
-            <a @click="goPage('List')" href="#">NFT列表</a>
-          </li>
-          <li>
-            <a @click="goPage('Make')" href="#">NFT制作</a>
-          </li>
-          <li>
-
-            <a @click="goPage('About')" href="#">导航标题2</a>
-          </li> -->
-
           </li>
         </ul>
       </div>
@@ -62,7 +52,7 @@ export default {
 
       ],
       navIndex:0,
-      logo: require( "../assets/img/logo.jpg")
+      logo: require("../assets/img/logo.jpg")
     }
   },
   props: {
@@ -84,7 +74,7 @@ export default {
     }
   },
   methods: {
-    goPage(i,item){
+    goPage(i, item){
       console.log("跳转")
       this.navIndex = i;
       var a = document.querySelector(".navbar-toggle");
@@ -121,7 +111,7 @@ export default {
   }
   .logo {
     height: 30px;
-    weight: 30px
+    weight: 30px;
   }
 }
 </style>

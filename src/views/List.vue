@@ -1,27 +1,36 @@
 <template>
   <div class="ListBox">
     <div class="col-lg-12 col-md-12 contentBox">
-      <div class="feetype row">
+      <div v-if="list.length" class="feetype row">
         <div v-for="item in list" :key="item.id" class="col-md-4 col-xs-12 recommend_li">
-          <div class="card" @click="toMake(item)">
+          <div  class="card" @click="toMake(item)">
+             <div>
+                <img width="100%" :src="item.owner.profileImgUrl" />
+                <!-- <span style="margin:3px 3px">{{item.price}}</span> -->
+              </div>
             <div class="describeInfo">
               <div class="describe_title">
                 <div style="margin:3px 3px">
-                  <b>{{item.title}}</b>
+                  <b>{{item.name}}</b>
                 </div>
-                <div style="margin:3px 3px"> {{item.name}} </div>
+                <div style="margin:3px 3px"> {{item.description}} </div>
               </div>
             </div>
-            <div class="describe_price">
+            <!-- <div class="describe_price">
               <div>
                 <img width="100%" :src="item.imageUrl" />
                 <span style="margin:3px 3px">{{item.price}}</span>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
+     
     </div>
+     <div v-if="!list.length"   style="width:60%;margin:40px auto">
+        <img  style="width:100%" src="../assets/img/empty.png" alt="">
+        <p style="text-align:center;color:#a8a8a8">您没有NFT哦！</p>
+      </div>
   </div>
 </template>
 
@@ -68,6 +77,7 @@
           orderDirection: "desc",
           offset: 0,
           limit: 20,
+         // owner: "0xB72b0a3e30BCF013310214f2B839162f7f066397"
           owner: account
         }
         const _this = this;

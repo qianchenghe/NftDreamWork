@@ -69,13 +69,14 @@
           params: getData,
           success(res) {
             if (res.code == 0) {
-              _this.qrcodeAddress = res.data.permalink;
-              _this.bgImageUrl = res.data.imageUrl;
+              _this.data = res.data
+              _this.qrcodeAddress = _this.data.permalink;
+              _this.bgImageUrl = _this.data.owner.profileImgUrl;
               console.log(res);
               console.log(_this.qrcodeAddress);
               console.log(_this.bgImageUrl);
-              _this.qrcode(res.data.permalink)
-              _this.drawAndShareImage(res.data.imageUrl, )
+              _this.qrcode( _this.qrcodeAddress)
+              _this.drawAndShareImage(_this.bgImageUrl )
             }
           },
           fail(err) {
