@@ -9,8 +9,13 @@
     </div>
     <div class="mackText">预览模式</div>
     <div class="mackBtn">
-      <van-popup closeable close-icon="close" @click-close-icon="closeModal" :style="{ height: popupH,width:'85%', }"
-        v-model="isShowModal">
+      <van-popup
+        closeable
+        close-icon="close"
+        @click-close-icon="closeModal"
+        :style="{ height: popupH,width:'85%', }"
+        v-model="isShowModal"
+      >
         <div id="dranwBox"></div>
       </van-popup>
 
@@ -42,10 +47,16 @@
     },
     mounted() {
       console.log(this.$route.query);
+      // if(String(this.$route.query) == "{}") alert("请先选择一张NFT")
       this.contraceAddress = this.$route.query.contraceAddress;
       this.tokenId = this.$route.query.tokenId;
-
-      this.getData();
+      if(this.contraceAddress && this.tokenId){
+        this.getData();
+      }else{
+         this.$toast.fail("请先选择一张NFT");
+          return false;
+      } 
+      
     },
     computed: {
 
@@ -75,8 +86,8 @@
               console.log(res);
               console.log(_this.qrcodeAddress);
               console.log(_this.bgImageUrl);
-              _this.qrcode( _this.qrcodeAddress)
-              _this.drawAndShareImage(_this.bgImageUrl )
+              _this.qrcode(_this.qrcodeAddress)
+              _this.drawAndShareImage(_this.bgImageUrl)
             }
           },
           fail(err) {
@@ -208,39 +219,43 @@
   };
 </script>
 <style lang="scss" scoped>
-  #canvasBox,
-  .mackBtn {
-    width: 86%;
-    height: 100%;
-    margin: 0 auto;
-    padding-top: 20px;
-    // border: 1px solid #ddd;
-  }
+#canvasBox,
+.mackBtn {
+  width: 86%;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 20px;
+  // border: 1px solid #ddd;
+}
 
-  .mackBtn {
-    border: none;
-    text-align: center;
-    margin-top: 40px;
-  }
+.mackBtn {
+  border: none;
+  text-align: center;
+  margin-top: 40px;
+}
 
-  .mackText {
-    margin-top: 10px;
-    font-size: 16px;
-    text-align: center;
-    color: #5e5e5e;
-  }
+.mackText {
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: #5e5e5e;
+}
+.el-button--primary {
+  color: #fff;
+  background-color: #bdbdbd;
+  border-color: #bdbdbd;
+}
+.preservation {
+  position: absolute;
+  bottom: -8rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  z-index: 10000;
+}
 
-  .preservation {
-    position: absolute;
-    bottom: -8rem;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    z-index: 10000;
-  }
-
-  // #dranwBox {
-  //   width: 90%;
-  //   margin: 10px auto;
-  //   height: 100%;
-  // }
+// #dranwBox {
+//   width: 90%;
+//   margin: 10px auto;
+//   height: 100%;
+// }
 </style>

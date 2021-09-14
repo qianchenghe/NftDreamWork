@@ -18,7 +18,7 @@
             :key="item.id"
             :class=" navIndex === index ? 'active' : ''"
           >
-            <a @click="goPage(index,item.navUrl)" data-toggle="tab" href="#">{{item.navName}}</a>
+            <a @click="goPage(index,item.navUrl)" href="#">{{item.navName}}</a>
           </li>
         </ul>
       </div>
@@ -76,15 +76,23 @@ export default {
   methods: {
     goPage(i, item){
       console.log("跳转")
-      this.navIndex = i;
-      var a = document.querySelector(".navbar-toggle");
-      $(".navbar-nav li a").on("click",function () {
-          a.click();
-      });
-      this.$router.push({
-        name:item
-      })
+      console.log(document.querySelector(".navbar-toggle"))
+      const _this = this
+      _this.navIndex = i;
+      // $(".navbar-nav li a").click(function(){
+      //   $('#collapse').addClass("collapsed");
+      //   $('#collapse').attr("aria-expanded",false);
+      //   $("#navbar").removeClass("in");
+      //   $("#navbar").attr("aria-expanded",false);
+      // });
 
+      var a = document.querySelector(".navbar-toggle");
+      $(".navbar-nav li a").on("click", function () {
+          a.click();
+          _this.$router.push({
+                   name:item
+          })
+      });
     },
     back() {
       if (this.$route.name == "Home" || this.$route.path == "/") {
@@ -112,6 +120,16 @@ export default {
   .logo {
     height: 30px;
     weight: 30px;
+  }
+
+  .navbar-header {
+    background-color: #d6e6f2;
+  }
+  .navbar-collapse {
+    background-color: #d6e6f2;
+  }
+  .navbar-nav .active > a {
+    background-color: #f7fbfc;
   }
 }
 </style>

@@ -1,5 +1,12 @@
 <template>
   <div class="home">
+    <!-- <div>
+      <br />
+      <br />
+      <br />
+
+      <img style="width:100%;height:100%" src="../assets/img/home.png" alt />
+    </div>-->
     <div class="introduction">NFT Dream work 最好用的nft二次加工平台</div>
     <div class="content">
       <br>应用场景:</br>
@@ -55,21 +62,28 @@
           _this.isShow = false;
         } else {
           console.log("connet wallet");
-          //判断用户是否安装MetaMask钱包插件
+          // 判断用户是否安装MetaMask钱包插件
           if (typeof window.ethereum === "undefined") {
-            //没安装MetaMask钱包进行弹框提示
-            alert("Looks like you need a Dapp browser to get started.");
-            alert("Consider installing MetaMask!");
+            // alert("您没有安装metaMask")
+            this.$toast.fail("您没有安装metaMask");
+                  return false;
+            // 没安装MetaMask钱包进行弹框提示
+            // alert("Looks like you need a Dapp browser to get started.");
+            // alert("Consider installing MetaMask!");
           } else {
-            //如果用户安装了MetaMask，你可以要求他们授权应用登录并获取其账号
+            // 如果用户安装了MetaMask，你可以要求他们授权应用登录并获取其账号
             ethereum.enable()
               .catch(function(reason) {
-                //如果用户拒绝了登录请求
+                // 如果用户拒绝了登录请求
                 if (reason === "User rejected provider access") {
                   // 用户拒绝登录后执行语句；
+                  this.$toast.fail("您拒绝了授权,请退出后重试");
+                  return false;
                 } else {
                   // 本不该执行到这里，但是真到这里了，说明发生了意外
-                  alert("There was an issue signing you in.");
+                  // alert("发生了未知错误");
+                   this.$toast.fail("发生了未知错");
+                  return false;
                 }
               }).then(function(accounts) {
                 console.log('地址列表', accounts)
@@ -84,33 +98,36 @@
   };
 </script>
 <style lang="scss" scoped>
-  #canvasBox,
+#canvasBox,
+.btn {
+  width: 100%;
+  border: none;
+  text-align: center;
+  margin-top: 15px;
+}
 
-  .btn {
-    width: 100%;
-    border: none;
-    text-align: center;
-    margin-top: 40px;
-  }
+.introduction {
+  margin-top: 15%;
+  font-size: 16px;
+  text-align: center;
+  color: #5e5e5e;
+  font-weight: bold;
+}
+.el-button--primary{
+   color: #FFF;
+    background-color: #bdbdbd;
+    border-color: #bdbdbd;
+}
+.content {
+  width: 70%;
+  margin-left: 15%;
+  font-size: 16px;
+  color: #5e5e5e;
+}
 
-  .introduction {
-    margin-top: 20%;
-    font-size: 16px;
-    text-align: center;
-    color: #5e5e5e;
-    font-weight: bold;
-  }
-
-  .content {
-    width: 70%;
-    margin-left: 15%;
-    font-size: 16px;
-    color: #5e5e5e;
-  }
-
-  .img {
-    margin-top: 20px;
-    width: 100%;
-    text-align: center;
-  }
+.img {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+}
 </style>

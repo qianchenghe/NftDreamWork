@@ -1,5 +1,8 @@
 import axios from "axios";
-import loadingServe from '../utils/loading'
+import Vue from 'vue'
+import { Toast } from 'vant'
+Vue.use(Toast)
+// import loadingServe from '../utils/loading'
 
 // console.log(loadingServe.showFullScreenLoading())
 // const token = localStorage.getItem("token");
@@ -20,7 +23,12 @@ server.interceptors.request.use(
         // }
         // config.url += `?${token}`;
         // config.url += store.state.NEEDAES ? `&Permission=${rest.encode(store.state.AESKEY)}` : ''
-        loadingServe.showFullScreenLoading()
+        // loadingServe.showFullScreenLoading()
+        Toast.loading({
+            duration: 0, // 持续展示 toast
+            message: '加载中...',
+            forbidClick: true
+        });
         return config;
     },
     err => {
@@ -29,17 +37,17 @@ server.interceptors.request.use(
 );
 server.interceptors.response.use(
     response => {
-        // Toast.clear();
+        Toast.clear();
         // console.log(response.data)
-        loadingServe.tryHideFullScreenLoading()
+       // loadingServe.tryHideFullScreenLoading()
         if (response.data.code == 0) {
             const data = response.data;
             return data;
         }
     },
     err => {
-        // Toast.clear();
-        loadingServe.tryHideFullScreenLoading()
+        Toast.clear();
+       // loadingServe.tryHideFullScreenLoading()
         console.log(err);
         if (err && err.response) {
             switch (err.response.status) {

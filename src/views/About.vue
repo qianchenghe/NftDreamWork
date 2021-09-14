@@ -1,5 +1,5 @@
 <template>
-  <div>11112233</div>
+  <div>团队介绍</div>
 </template>
 <script>
 // @ is an alias to /src

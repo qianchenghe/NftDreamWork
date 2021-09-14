@@ -62,8 +62,8 @@ export default {
       },
       // 二维码生成
       qrcode(qrcodeAddress) {
-        this.qrcode1= new QRCode("qrcode", {
-            render: "canvas", //也可以替换为table
+        this.qrcode1 = new QRCode("qrcode", {
+            render: "canvas", // 也可以替换为table
             width: 80,
             height: 80,
             text: qrcodeAddress, // 二维码地址
