@@ -39,7 +39,7 @@ export default {
         },
         {
           navUrl:"List",
-          navName:"NFT列表"
+          navName:"我的NFT"
         },
         {
           navUrl:"Make",
